@@ -11,10 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class IngredienteBoundary extends Application {
+public class IngredienteBoundary implements ITelaStrategy {
 
     private TextField txtNome = new TextField();
     private TextField txtTipoUnit = new TextField();
@@ -23,24 +24,18 @@ public class IngredienteBoundary extends Application {
     private Button btRemover = new Button("Remover");
     private Button btAlterar = new Button("Alterar");
     
+    private BorderPane panePrincipal = new BorderPane();
+    private GridPane gridPane = new GridPane();
+    
+
+    private HBox paneBotao = new HBox(10);
+    private VBox paneSecundario = new VBox(20);
+    
     private IngredienteControl control = new IngredienteControl();
 
-    public static void main(String[] args) {
-        Application.launch(IngredienteBoundary.class, args);
-    }
-
-    @Override
-    public void start(Stage stg) {
-        BorderPane panePrincipal = new BorderPane();
-        GridPane gridPane = new GridPane();
-        
-        Scene scn = new Scene(panePrincipal, 600, 400);
-
-        HBox paneBotao = new HBox(10);
-        VBox paneSecundario = new VBox(20);
-        
-        
-        paneBotao.getChildren().addAll(btAdicionar, btAlterar, btRemover);
+    public IngredienteBoundary() {
+    	
+    	paneBotao.getChildren().addAll(btAdicionar, btAlterar, btRemover);
         
         paneSecundario.setPadding(new Insets(15, 15, 15, 15));
         
@@ -66,12 +61,12 @@ public class IngredienteBoundary extends Application {
         
         Bindings.bindBidirectional(txtNome.textProperty(), control.nomeProperty());
         Bindings.bindBidirectional(txtTipoUnit.textProperty(), control.tipoUnitProperty());
-        
-        
-        
-        stg.setTitle("Cadastrar Ingrediente");
-        stg.setScene(scn);
-        stg.show();
+		
+	}
 
-    }
+
+	@Override
+	public Pane fornecerConteudo() {
+		return panePrincipal;
+	}
 }

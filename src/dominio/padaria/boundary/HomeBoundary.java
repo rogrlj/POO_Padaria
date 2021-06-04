@@ -4,8 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +12,12 @@ import javafx.stage.Stage;
 public class HomeBoundary extends Application{
 	
 	private Label nome = new Label("BEM VINDO AO SIGP");
+	
+	private ITelaStrategy telaIngr = new IngredienteBoundary();
+	private ITelaStrategy telaProd = new ProdutoBoundary();
+	private ITelaStrategy telaEst = new EstoqueBoundary();
+	private ITelaStrategy telaRelat = new RelatorioBoundary();
+
 	
 	public static void main(String[] args) {
 		Application.launch(HomeBoundary.class, args);
@@ -26,29 +30,38 @@ public class HomeBoundary extends Application{
 	    AnchorPane pane = new AnchorPane();
 		ToolBar toolBar = new ToolBar();
 		Scene scn = new Scene(pane, 600, 400);
+		
+	    border.setCenter(nome);
      
 		
 		Button btnHome = new Button("Home");
         toolBar.getItems().add(btnHome);
         
+        btnHome.setOnAction((e) -> { border.setCenter(nome);});      
+        
         Button btnProd = new Button("Cadastrar Produto");
         toolBar.getItems().add(btnProd);
+        
+        btnProd.setOnAction((e) -> { border.setCenter(telaProd.fornecerConteudo());});
         
         Button btnIng = new Button("Cadastrar Ingrediente");
         toolBar.getItems().add(btnIng);
         
-        IngredienteBoundary ib = new IngredienteBoundary();
-        btnIng.setOnAction((e) -> { ib.start(stg);});
+        btnIng.setOnAction((e) -> { border.setCenter(telaIngr.fornecerConteudo());});
         
         Button btnEstoque = new Button("Controle Estoque");
         toolBar.getItems().add(btnEstoque);
         
+        btnEstoque.setOnAction((e) -> { border.setCenter(telaEst.fornecerConteudo());});
+        
         Button btnRelat= new Button("Visualizar Relatórios");
         toolBar.getItems().add(btnRelat);
+        
+        btnRelat.setOnAction((e) -> { border.setCenter(telaRelat.fornecerConteudo());});
 
 	    border.setTop(toolBar);
 	    
-	    border.setCenter(nome);
+
 
 
 	      AnchorPane.setTopAnchor(border, 15.0);
@@ -67,6 +80,8 @@ public class HomeBoundary extends Application{
 
 	
 	public void teste () {
+		
+		
 		
 	}
 }

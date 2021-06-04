@@ -10,9 +10,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class ProdutoBoundary extends Application{
+public class ProdutoBoundary implements ITelaStrategy{
 	
 	private TextField nomeProduto = new TextField();
 	private Button btnPesquisar = new Button("Pesquisar");
@@ -23,24 +24,15 @@ public class ProdutoBoundary extends Application{
 	private Label lblNome = new Label("Nome");
 	private int x= 0;
 	
-	public static void main(String[] args) {
-		Application.launch(ProdutoBoundary.class, args);
-	}
-
-	@Override
-	public void start(Stage stg) throws Exception {
-		
-		AnchorPane pane = new AnchorPane();
-		BorderPane border = new BorderPane();
-		HBox hbox = new HBox();
-		GridPane grid = new GridPane();
-		
-		Scene scn = new Scene(pane, 600, 400);
-		
+	private BorderPane border = new BorderPane();
+	private HBox hbox = new HBox();
+	private GridPane grid = new GridPane();
+	
+    public ProdutoBoundary() {
+			
 		hbox.getChildren().addAll(lblNome, nomeProduto, btnPesquisar);
 		
 		border.setTop(hbox);
-		
 		
 
 		grid.add(new ComboBox<>(), 0, x);
@@ -62,18 +54,12 @@ public class ProdutoBoundary extends Application{
 		
 		border.setBottom(btnSalvar);
 		
-		
-		AnchorPane.setTopAnchor(border, 15.0);
-	    AnchorPane.setRightAnchor(border, 15.0);
-	    AnchorPane.setBottomAnchor(border, 15.0);
-	    AnchorPane.setLeftAnchor(border, 15.0);
-	    pane.getChildren().addAll(border);
-	    pane.setStyle("-fx-background-color: BEIGE");
-	    
-	    stg.setTitle("Cadastrar Produto");
-	    stg.setScene(scn);
-	    stg.show();
-		
+	}
+
+	@Override
+	public Pane fornecerConteudo() {
+		// TODO Auto-generated method stub
+		return border;
 	}
 	
 
