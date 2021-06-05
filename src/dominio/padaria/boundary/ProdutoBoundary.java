@@ -18,8 +18,8 @@ public class ProdutoBoundary implements ITelaStrategy{
 	private TextField nomeProduto = new TextField();
 	private Button btnPesquisar = new Button("Pesquisar");
 	private Button btnSalvar = new Button("Salvar");
-//	private ComboBox<String> cmbIngr = new ComboBox<>();
-//	private TextField qtdeIngr = new TextField();
+	private ComboBox<String> cmbIngr = new ComboBox<>();
+	private TextField qtdeIngr = new TextField();
 	private Button btnNovoIngr = new Button("+");
 	private Label lblNome = new Label("Nome");
 	private int x= 0;
@@ -34,22 +34,23 @@ public class ProdutoBoundary implements ITelaStrategy{
 		
 		border.setTop(hbox);
 		
+//		cmbIngr.setItems();
+		
 
-		grid.add(new ComboBox<>(), 0, x);
+		grid.add(cmbIngr, 0, x);
 		grid.add(new Label("Quantidade"), 1, x);
-		grid.add(new TextField(), 2, x);;
+		grid.add(qtdeIngr, 2, x);
 		grid.add(btnNovoIngr, 3, x);
 		
 		border.setCenter(grid);
 		
 		btnNovoIngr.setOnAction((e) -> {
 			x++;
-			grid.add(new ComboBox<String>(), 0, x);
+			ComboBox<String> newCmbIngr = new ComboBox<>();
+			TextField qtdeIngr = new TextField();
+			grid.add(newCmbIngr, 0, x);
 			grid.add(new Label("Quantidade"), 1, x);
-			grid.add(new TextField(), 2, x);
-//			grid.add(cmbIngr, 0, x);
-//			grid.add(new Label("Quantidade"), 1, x);
-//			grid.add(qtdeIngr, 2, x);
+			grid.add(qtdeIngr, 2, x);
 			});
 		
 		border.setBottom(btnSalvar);

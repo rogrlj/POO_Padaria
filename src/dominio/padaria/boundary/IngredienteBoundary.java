@@ -1,5 +1,7 @@
 package dominio.padaria.boundary;
 
+import java.sql.SQLException;
+
 import dominio.padaria.control.IngredienteControl;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -50,10 +52,30 @@ public class IngredienteBoundary implements ITelaStrategy {
         control.generateTable();       
         panePrincipal.setCenter(control.getTable());
         
-        btAdicionar.setOnAction((e) -> { control.adicionar();});
-        btPesquisar.setOnAction((e) -> { control.pesquisarPorNome();});
-        btAlterar.setOnAction((e) -> { control.alterar();});
-        btRemover.setOnAction((e) -> { control.remover();});
+        btAdicionar.setOnAction((e) -> { try {
+			control.adicionar();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}});
+        btPesquisar.setOnAction((e) -> { try {
+			control.pesquisarPorNome();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}});
+        btAlterar.setOnAction((e) -> { try {
+			control.alterar();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}});
+        btRemover.setOnAction((e) -> { try {
+			control.remover();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}});
           
         paneSecundario.getChildren().addAll(gridPane, paneBotao);
                 

@@ -1,8 +1,12 @@
 package dominio.padaria.control;
 
 import java.util.Iterator;
+import java.util.List;
 
 import dominio.padaria.entity.Ingrediente;
+import dominio.padario.dao.DAOException;
+import dominio.padario.dao.IIngredienteDAO;
+import dominio.padario.dao.IngredienteDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -10,6 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import java.sql.SQLException;
+
 
 public class IngredienteControl {
 
@@ -17,16 +23,16 @@ public class IngredienteControl {
 	private TableView<Ingrediente> table = new TableView<>();
 
 	private StringProperty nome = new SimpleStringProperty("");
-
 	public StringProperty nomeProperty() {
 		return nome;
 	}
 
 	private StringProperty tipoUnit = new SimpleStringProperty("");
-
 	public StringProperty tipoUnitProperty() {
 		return tipoUnit;
 	}
+	
+	private IIngredienteDAO ingDAO = new IngredienteDAO();
 
 	public Ingrediente getEntity() {
 		Ingrediente i = new Ingrediente();
@@ -42,39 +48,27 @@ public class IngredienteControl {
 		}
 	}
 
-	public void adicionar() {
-		lista.add(getEntity());
+	public void adicionar() throws SQLException {
+		Ingrediente i = getEntity();
+		ingDAO.adicionar(i);
 	}
 
-	public void pesquisarPorNome() {
-		for (Ingrediente i : lista) {
-			if (i.getNome().contains(nome.get())) {
-				setEntity(i);
-			}
-		}
+	public void pesquisarPorNome() throws SQLException {
+		List<Ingrediente> pets = ingDAO.pesquisarPorNome(nome.get());
+        lista.clear();
+        lista.addAll(pets);
 	}
 
-	public void remover() {
-		try {
-			for (Ingrediente i : lista) {
-				if (i.getNome().equalsIgnoreCase(nome.get())) {
-					lista.remove(i);
-				}
-			}
-		}
-		 catch (Exception e) {
-			System.out.println(e);
-		}
+	public void remover() throws SQLException {
+		Ingrediente i = getEntity();
+		ingDAO.remover(i);
 		
 
 	}
 
-	public void alterar() {
-		for (Ingrediente i : lista) {
-			if (i.getNome().contains(nome.get())) {
-				lista.set(lista.indexOf(i), getEntity());
-			}
-		}
+	public void alterar() throws SQLException {
+		Ingrediente i = getEntity();
+		ingDAO.alterar(i);
 	}
 
 	public void generateTable() {

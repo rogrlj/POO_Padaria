@@ -5,7 +5,7 @@ import java.util.List;
 public class Produto {
 	
 	private String nome;
-	
+		
 	private List<Ingrediente_Produto> ingrediente;
 	
 

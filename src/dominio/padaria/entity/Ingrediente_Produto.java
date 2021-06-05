@@ -5,7 +5,7 @@ public class Ingrediente_Produto {
 	
 	private int quantidade;
 	
-	private Ingrediente ingrediente;
+	private String ingrediente;
 
 	public int getQuantidade() {
 		return quantidade;
@@ -15,11 +15,11 @@ public class Ingrediente_Produto {
 		this.quantidade = quantidade;
 	}
 
-	public Ingrediente getIngrediente() {
+	public String getIngrediente() {
 		return ingrediente;
 	}
 
-	public void setIngrediente(Ingrediente ingrediente) {
+	public void setIngrediente(String ingrediente) {
 		this.ingrediente = ingrediente;
 	}
 
