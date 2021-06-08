@@ -2,9 +2,9 @@ package dominio.padaria.control;
 
 import java.util.List;
 
+import dominio.padaria.dao.EstoqueDAO;
+import dominio.padaria.dao.IEstoqueDAO;
 import dominio.padaria.entity.Ingrediente;
-import dominio.padario.dao.EstoqueDAO;
-import dominio.padario.dao.IEstoqueDAO;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;

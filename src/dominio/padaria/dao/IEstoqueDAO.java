@@ -1,4 +1,4 @@
-package dominio.padario.dao;
+package dominio.padaria.dao;
 
 import java.time.LocalDate;
 import java.util.List;

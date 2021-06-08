@@ -1,4 +1,4 @@
-package dominio.padario.dao;
+package dominio.padaria.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
