@@ -14,7 +14,6 @@ public class HomeBoundary extends Application{
 	private Label nome = new Label("BEM VINDO AO SIGP");
 	
 	private ITelaStrategy telaIngr = new IngredienteBoundary();
-	private ITelaStrategy telaProd = new ProdutoBoundary();
 	private ITelaStrategy telaEst = new EstoqueBoundary();
 	private ITelaStrategy telaRelat = new RelatorioBoundary();
 
@@ -39,11 +38,7 @@ public class HomeBoundary extends Application{
         
         btnHome.setOnAction((e) -> { border.setCenter(nome);});      
         
-        Button btnProd = new Button("Cadastrar Produto");
-        toolBar.getItems().add(btnProd);
-        
-        btnProd.setOnAction((e) -> { border.setCenter(telaProd.fornecerConteudo());});
-        
+                
         Button btnIng = new Button("Cadastrar Ingrediente");
         toolBar.getItems().add(btnIng);
         
@@ -71,7 +66,7 @@ public class HomeBoundary extends Application{
 	      pane.getChildren().addAll(border);
 	      pane.setStyle("-fx-background-color: BEIGE");
 	      
-	      stg.setTitle("Home");
+	      stg.setTitle("SIGP");
 	      stg.setScene(scn);
 	      stg.show();
 		
@@ -79,9 +74,4 @@ public class HomeBoundary extends Application{
 	}
 
 	
-	public void teste () {
-		
-		
-		
-	}
 }

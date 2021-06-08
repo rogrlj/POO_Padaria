@@ -6,7 +6,7 @@ public class Estoque {
 	
 	private int quantidade;
 	
-	private int ingrediente;
+	private Ingrediente ingrediente;
 
 	public int getQuantidade() {
 		return quantidade;
@@ -16,11 +16,11 @@ public class Estoque {
 		this.quantidade = quantidade;
 	}
 
-	public int getIngrediente() {
+	public Ingrediente getIngrediente() {
 		return ingrediente;
 	}
 
-	public void setIngrediente(int ingrediente) {
+	public void setIngrediente(Ingrediente ingrediente) {
 		this.ingrediente = ingrediente;
 	}
 

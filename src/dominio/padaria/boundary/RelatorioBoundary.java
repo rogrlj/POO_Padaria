@@ -13,16 +13,15 @@ public class RelatorioBoundary implements ITelaStrategy {
 	private Label lblHist = new Label("Historico");
 	
 	private RelatorioControl control = new RelatorioControl();
-	private IngredienteControl controlIng = new IngredienteControl();
 	
 	private VBox vbox = new VBox();
 	
 	
 	public RelatorioBoundary() {
 		
-		controlIng.generateTable();
+		control.generateTableEstoque();
 		control.generateTableHist();
-		vbox.getChildren().addAll(lblAtivos, controlIng.getTable(), lblHist, control.getTableHist());
+		vbox.getChildren().addAll(lblAtivos, control.getTableEstoque(), lblHist, control.getTableHist());
 		
 	}
 

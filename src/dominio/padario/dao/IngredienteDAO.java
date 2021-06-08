@@ -93,4 +93,20 @@ public class IngredienteDAO implements IIngredienteDAO{
 		
 	}
 
+
+	@Override
+	public void adicionarEstoque(Ingrediente i) {
+		try {
+			String sql = "INSERT INTO estoque (quantidade, ingrediente_id) VALUES (?, ?)";
+	        PreparedStatement stmt = c.prepareStatement(sql);
+	        stmt.setInt(1, 0);
+	        stmt.setInt(2, i.getId());
+	        stmt.executeUpdate();
+	        stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }

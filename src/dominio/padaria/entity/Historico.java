@@ -6,9 +6,9 @@ public class Historico {
 	
 	private int id;
 	private String nome;
-	private int quantidadeOperacao;
+	private String quantidadeOperacao;
 	private String acao;
-	private LocalDate date;
+	private String date;
 
 	public String getNome() {
 		return nome;
@@ -18,11 +18,11 @@ public class Historico {
 		this.nome = nome;
 	}
 
-	public int getQuantidadeOperacao() {
+	public String getQuantidadeOperacao() {
 		return quantidadeOperacao;
 	}
 
-	public void setQuantidadeOperacao(int quantidadeOperacao) {
+	public void setQuantidadeOperacao(String quantidadeOperacao) {
 		this.quantidadeOperacao = quantidadeOperacao;
 	}
 
@@ -34,11 +34,11 @@ public class Historico {
 		this.acao = acao;
 	}
 
-	public LocalDate getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

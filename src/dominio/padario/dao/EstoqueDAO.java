@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +25,12 @@ public class EstoqueDAO implements IEstoqueDAO{
 	}
 
 	@Override
-	public void adicionar(Estoque e) {
+	public void remover(Ingrediente i, int qtde) {
 		try {
-			String sql = "INSERT INTO estoque (quantidade, ingrediente_id) VALUES (?, ?)";
+			String sql = "UPDATE estoque SET quantidade = (quantidade - ?) WHERE ingrediente_id = ?";
 	        PreparedStatement stmt = c.prepareStatement(sql);
-	        stmt.setInt(1, e.getQuantidade());
+	        stmt.setInt(1, qtde);
+	        stmt.setInt(2, i.getId());
 	        stmt.executeUpdate();
 	        stmt.close();
 		} catch (SQLException e1) {
@@ -38,13 +40,12 @@ public class EstoqueDAO implements IEstoqueDAO{
 	}
 
 	@Override
-	public void alterar(Estoque e) {
+	public void adicionar(Ingrediente i, int qtde) {
 		try {
-			String sql = "UPDATE estoque SET quantidade = ?, ingrediente_id = ? WHERE id = ?";
+			String sql = "UPDATE estoque SET quantidade = (quantidade + ?) WHERE ingrediente_id = ?";
 	        PreparedStatement stmt = c.prepareStatement(sql);
-	        stmt.setInt(1, e.getQuantidade());
-	        stmt.setInt(2, e.getIngrediente());
-	        stmt.setInt(3, e.getId());
+	        stmt.setInt(1, qtde);
+	        stmt.setInt(2, i.getId());
 	        stmt.executeUpdate();
 	        stmt.close();
 		} catch (SQLException e1) {
@@ -57,11 +58,9 @@ public class EstoqueDAO implements IEstoqueDAO{
 	public List<Ingrediente> pesquisarIngrediente(String nome) {
 		List<Ingrediente> lista = new ArrayList<>();
 		try {
-			String sql = "\r\n" + 
-					"SELECT ping.ingrediente_id, i.nome, ping.quantidade \r\n" + 
-					"FROM ingrediente i, produto_ingrediente ping\r\n" + 
-					"WHERE i.id = ping.ingrediente_id";
+			String sql = "SELECT * FROM ingrediente WHERE nome LIKE ?";
 	        PreparedStatement stmt = c.prepareStatement(sql);
+	        stmt.setString(1, "%" + nome + "%");
 	        ResultSet rs = stmt.executeQuery();
 
 	        while(rs.next()) {
@@ -77,25 +76,24 @@ public class EstoqueDAO implements IEstoqueDAO{
 		
 		return lista;
 	}
-	
-	public int getIdIngrediente(String nome) {
-		
-		int id = 0;
-		
-		try {
-			String sql = "SELECT id FROM ingrediente WHERE nome LIKE ?";
-	        PreparedStatement stmt = c.prepareStatement(sql);
-	        stmt.setString(1, "%" + nome + "%");
-	        ResultSet rs = stmt.executeQuery();
 
-	        while(rs.next()) {
-	            
-	            id = (rs.getInt("id"));
-	        } 
-		}catch (SQLException e) {
+	@Override
+	public void gerarHistorico(Ingrediente i, String acao, int qtde) {
+		try {
+			String sql = "INSERT INTO historico (acao, quantidade, nome, data_acao) VALUES (?, ?, ?, GETDATE())";
+	        PreparedStatement stmt = c.prepareStatement(sql);
+	        stmt.setString(1, acao);
+	        stmt.setInt(2, qtde);
+	        stmt.setString(3, i.getNome());
+	        stmt.executeUpdate();
+	        stmt.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return id;
+		
 	}
+
+
+	
 
 }

@@ -75,6 +75,11 @@ public class IngredienteControl {
 		Ingrediente i = getEntity();
 		ingDAO.alterar(i);
 	}
+	
+	public void adicinarEstoque() {
+		Ingrediente i = getEntity();
+		ingDAO.adicionarEstoque(i);
+	}
 
 	@SuppressWarnings("unchecked")
 	public void generateTable() {

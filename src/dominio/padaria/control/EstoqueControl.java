@@ -1,16 +1,14 @@
 package dominio.padaria.control;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import dominio.padaria.entity.Estoque;
 import dominio.padaria.entity.Ingrediente;
 import dominio.padario.dao.EstoqueDAO;
 import dominio.padario.dao.IEstoqueDAO;
-import dominio.padario.dao.IIngredienteDAO;
-import dominio.padario.dao.IngredienteDAO;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -21,15 +19,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EstoqueControl {
 	
-	private ObservableList<Ingrediente> lista = FXCollections.observableArrayList();
+		
+	private ObservableList<Ingrediente> listaIng = FXCollections.observableArrayList();
 	private TableView<Ingrediente> table = new TableView<>();
 	
 	private IEstoqueDAO estDAO = new EstoqueDAO();
-	private IIngredienteDAO ingDAO = new IngredienteDAO();
 	
-	private IngredienteControl controlIng = new IngredienteControl();
-	private Ingrediente i;
-
 	private StringProperty nome = new SimpleStringProperty("");
 	public StringProperty nomeProperty() {
 		return nome;
@@ -39,71 +34,71 @@ public class EstoqueControl {
 	public IntegerProperty quantidadeProperty() {
 		return quantidade;
 	}
-	
+		
 	private IntegerProperty id = new SimpleIntegerProperty();
 	public IntegerProperty idProperty() {
 		return id;
 	}
 	
+	private ObjectProperty<Ingrediente> ing = new SimpleObjectProperty<Ingrediente>();
+	public ObjectProperty<Ingrediente> idIngProperty() {
+		return ing;
+	}
 	
-	private void setEntity(Estoque e) {
-		if (e != null) {
-			quantidade.set(e.getQuantidade());
-			id.set(e.getIngrediente());
+
+	
+	private void setEntity(Ingrediente i) {
+		if (i != null) {
+			id.set(i.getId());
+			nome.set(i.getNome());
 		}
 	}
 	
-	public Estoque getEntity() {
-		Estoque e = new Estoque();
-		e.setIngrediente(i.getId());
-		e.setQuantidade(quantidade.get());
-		return e;
+	public Ingrediente getEntity() {
+		Ingrediente i = new Ingrediente();
+		i.setId(id.get());
+		i.setNome(nome.get());
+		return i;
 	}
 	
 	public void adicionar() {
-		Estoque e = getEntity();
-		if (e == null) {
-			estDAO.adicionar(e);
-		} else {
-			alterar(e);
-		}
+		Ingrediente i = getEntity();
+		estDAO.adicionar(i, quantidade.get());
 	}
 	
-	private void alterar(Estoque e) {
-		estDAO.alterar(e);
-		
+	public void remover() {
+		Ingrediente i = getEntity();
+		estDAO.remover(i, quantidade.get());
 	}
-
+	
 	public void pesquisarIngrediente() {
-		List<Ingrediente> i = ingDAO.pesquisarPorNome(nome.get());
-        lista.clear();
-        lista.addAll(i);
+		List<Ingrediente> i = estDAO.pesquisarIngrediente(nome.get());
+        listaIng.clear();
+        listaIng.addAll(i);
 	}
 	
+	public void gerarHistorico(String acao) {
+		Ingrediente i = getEntity();
+		estDAO.gerarHistorico(i, acao, quantidade.get());
+	}
+	
+	@SuppressWarnings("unchecked")
 	public void generateTable() {
 		TableColumn<Ingrediente, String> colNome = new TableColumn<>("Nome");
 		colNome.setCellValueFactory(new PropertyValueFactory<Ingrediente, String>("nome"));
 		
 		TableColumn<Ingrediente, Integer> colId = new TableColumn<>("Id");
 		colId.setCellValueFactory(new PropertyValueFactory<Ingrediente, Integer>("id"));
-
-		table.getColumns().addAll(colId, colNome);
-		table.setItems(lista);
+				
+		table.getColumns().addAll(colNome, colId);
+		table.setItems(listaIng);
 		
 		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             setEntity(newValue);
         });
-		
-		table.setItems(lista);
-		pesquisarPorNome();
 	}
 
-	private void setEntity(Ingrediente newValue) {
-		controlIng.
-		
-	}
-
-
+	
 	public TableView<Ingrediente> getTable() {
 		return table;
 	}
