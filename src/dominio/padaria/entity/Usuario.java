@@ -4,7 +4,7 @@ public class Usuario {
 	
 	private String username;
 	private String password;
-	private char autenticador;
+	private String autenticador;
 
 	public String getUsername() {
 		return username;
@@ -22,11 +22,11 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public char getAutenticador() {
+	public String getAutenticador() {
 		return autenticador;
 	}
 
-	public void setAutenticador(char autenticador) {
+	public void setAutenticador(String autenticador) {
 		this.autenticador = autenticador;
 	}
 

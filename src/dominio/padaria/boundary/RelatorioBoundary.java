@@ -1,6 +1,5 @@
 package dominio.padaria.boundary;
 
-import dominio.padaria.control.IngredienteControl;
 import dominio.padaria.control.RelatorioControl;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;

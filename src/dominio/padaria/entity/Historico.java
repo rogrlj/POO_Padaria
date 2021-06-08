@@ -1,7 +1,5 @@
 package dominio.padaria.entity;
 
-import java.time.LocalDate;
-
 public class Historico {
 	
 	private int id;

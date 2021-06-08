@@ -1,15 +1,12 @@
 package dominio.padaria.control;
 
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 import dominio.padaria.dao.IRelatorioDAO;
 import dominio.padaria.dao.RelatorioDAO;
-import dominio.padaria.entity.Estoque;
 import dominio.padaria.entity.Historico;
-import dominio.padaria.entity.Ingrediente;
 import dominio.padaria.entity.RelatorioEstoque;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;

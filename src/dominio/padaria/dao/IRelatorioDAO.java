@@ -3,7 +3,6 @@ package dominio.padaria.dao;
 import java.util.List;
 
 import dominio.padaria.entity.Historico;
-import dominio.padaria.entity.Ingrediente;
 import dominio.padaria.entity.RelatorioEstoque;
 
 public interface IRelatorioDAO {

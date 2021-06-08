@@ -1,6 +1,8 @@
 package dominio.padaria.boundary;
 
+import dominio.padaria.control.ControlLogin;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +19,10 @@ public class LoginBoundary extends Application{
 	private TextField txtPassword = new TextField();
 	
 	private Button btnEntrar = new Button("Entrar");
+	
+	private ControlLogin control = new ControlLogin();
+	
+	private HomeBoundary hb = new HomeBoundary();
 
 	public static void main(String[] args) {
 		Application.launch(LoginBoundary.class, args);
@@ -52,11 +58,24 @@ public class LoginBoundary extends Application{
 		
 		vbox.getChildren().addAll(nome, grid, btnEntrar);
 		
+		Bindings.bindBidirectional(txtUser.textProperty(), control.usernameProperty());
+        Bindings.bindBidirectional(txtPassword.textProperty(), control.passwordProperty());
+        
+        btnEntrar.setOnAction((e) -> {control.validacao(); 
+        try {
+			hb.start(stg);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}});
+		
 		
 		stg.setTitle("Login");
         stg.setScene(scn);
         stg.show();
 	}
+	
+	
 	
 	
 }

@@ -1,9 +1,9 @@
 package dominio.padaria.dao;
 
-import java.time.LocalDate;
+
 import java.util.List;
 
-import dominio.padaria.entity.Estoque;
+
 import dominio.padaria.entity.Ingrediente;
 
 public interface IEstoqueDAO {
