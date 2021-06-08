@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Historico {
 	
+	private int id;
 	private String nome;
 	private int quantidadeOperacao;
 	private String acao;
@@ -39,6 +40,14 @@ public class Historico {
 
 	public void setDate(LocalDate date) {
 		this.date = date;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

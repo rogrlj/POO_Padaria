@@ -1,6 +1,10 @@
 package dominio.padaria.boundary;
 
+import dominio.padaria.control.ProdutoControl;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -12,11 +16,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 public class ProdutoBoundary implements ITelaStrategy{
 	
 	private TextField nomeProduto = new TextField();
-	private Button btnPesquisar = new Button("Pesquisar");
+	private Button btnCriar= new Button("Criar");
 	private Button btnSalvar = new Button("Salvar");
 	private ComboBox<String> cmbIngr = new ComboBox<>();
 	private TextField qtdeIngr = new TextField();
@@ -28,13 +34,20 @@ public class ProdutoBoundary implements ITelaStrategy{
 	private HBox hbox = new HBox();
 	private GridPane grid = new GridPane();
 	
-    public ProdutoBoundary() {
+	private ProdutoControl control = new ProdutoControl();
+	
+	private ObservableList<String> ingr =  FXCollections.observableArrayList();
+	
+    @SuppressWarnings("unchecked")
+	public ProdutoBoundary() {
 			
-		hbox.getChildren().addAll(lblNome, nomeProduto, btnPesquisar);
+		hbox.getChildren().addAll(lblNome, nomeProduto, btnCriar);
 		
 		border.setTop(hbox);
 		
-//		cmbIngr.setItems();
+		ingr.addAll(control.buscaIngrediente());
+		
+		cmbIngr.setItems(ingr);
 		
 
 		grid.add(cmbIngr, 0, x);
@@ -47,6 +60,7 @@ public class ProdutoBoundary implements ITelaStrategy{
 		btnNovoIngr.setOnAction((e) -> {
 			x++;
 			ComboBox<String> newCmbIngr = new ComboBox<>();
+			newCmbIngr.setItems(ingr);
 			TextField qtdeIngr = new TextField();
 			grid.add(newCmbIngr, 0, x);
 			grid.add(new Label("Quantidade"), 1, x);
@@ -55,6 +69,14 @@ public class ProdutoBoundary implements ITelaStrategy{
 		
 		border.setBottom(btnSalvar);
 		
+        StringConverter converter = new IntegerStringConverter();
+		
+		Bindings.bindBidirectional(nomeProduto.textProperty(), control.nomeProdutoProperty());
+		Bindings.bindBidirectional(qtdeIngr.textProperty(), control.quantidadeProperty(), converter);
+		Bindings.bindBidirectional(cmbIngr.valueProperty(), control.nomeIngrProperty());
+		
+		btnCriar.setOnAction((e) -> {control.adicionar();});
+		btnSalvar.setOnAction((e) -> {control.adicionarIngredienteProduto();});;
 	}
 
 	@Override

@@ -1,6 +1,11 @@
 package dominio.padaria.entity;
 
 public class Ingrediente {
+	
+	private int id;
+	private String nome;
+    private String tipoUnit;
+
 
     public String getNome() {
         return nome;
@@ -18,8 +23,14 @@ public class Ingrediente {
         this.tipoUnit = tipoUnit;
     }
 
-    private String nome;
-    private String tipoUnit;
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+    
 
 }

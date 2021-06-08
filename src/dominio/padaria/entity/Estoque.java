@@ -2,9 +2,11 @@ package dominio.padaria.entity;
 
 public class Estoque {
 	
+	private int id;
+	
 	private int quantidade;
 	
-	private Ingrediente ingrediente;
+	private int ingrediente;
 
 	public int getQuantidade() {
 		return quantidade;
@@ -14,12 +16,20 @@ public class Estoque {
 		this.quantidade = quantidade;
 	}
 
-	public Ingrediente getIngrediente() {
+	public int getIngrediente() {
 		return ingrediente;
 	}
 
-	public void setIngrediente(Ingrediente ingrediente) {
+	public void setIngrediente(int ingrediente) {
 		this.ingrediente = ingrediente;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 

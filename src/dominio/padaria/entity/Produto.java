@@ -5,9 +5,7 @@ import java.util.List;
 public class Produto {
 	
 	private String nome;
-		
-	private List<Ingrediente_Produto> ingrediente;
-	
+	private int id;
 
 	public String getNome() {
 		return nome;
@@ -17,12 +15,12 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public List<Ingrediente_Produto> getIngrediente() {
-		return ingrediente;
+	public int getId() {
+		return id;
 	}
 
-	public void setIngrediente(List<Ingrediente_Produto> ingrediente) {
-		this.ingrediente = ingrediente;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -1,12 +1,12 @@
 package dominio.padaria.control;
 
-import java.util.Iterator;
 import java.util.List;
 
 import dominio.padaria.entity.Ingrediente;
-import dominio.padario.dao.DAOException;
 import dominio.padario.dao.IIngredienteDAO;
 import dominio.padario.dao.IngredienteDAO;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import java.sql.SQLException;
+
 
 
 public class IngredienteControl {
@@ -32,10 +32,16 @@ public class IngredienteControl {
 		return tipoUnit;
 	}
 	
+	private IntegerProperty id = new SimpleIntegerProperty();
+	public IntegerProperty idProperty() {
+		return id;
+	}
+	
 	private IIngredienteDAO ingDAO = new IngredienteDAO();
 
 	public Ingrediente getEntity() {
 		Ingrediente i = new Ingrediente();
+		i.setId(id.get());
 		i.setNome(nome.get());
 		i.setTipoUnit(tipoUnit.get());
 		return i;
@@ -43,34 +49,34 @@ public class IngredienteControl {
 
 	private void setEntity(Ingrediente i) {
 		if (i != null) {
+			id.set(i.getId());
 			nome.set(i.getNome());
 			tipoUnit.set(i.getTipoUnit());
 		}
 	}
 
-	public void adicionar() throws SQLException {
+	public void adicionar() {
 		Ingrediente i = getEntity();
 		ingDAO.adicionar(i);
 	}
 
-	public void pesquisarPorNome() throws SQLException {
-		List<Ingrediente> pets = ingDAO.pesquisarPorNome(nome.get());
+	public void pesquisarPorNome() {
+		List<Ingrediente> i = ingDAO.pesquisarPorNome(nome.get());
         lista.clear();
-        lista.addAll(pets);
+        lista.addAll(i);
 	}
 
-	public void remover() throws SQLException {
+	public void remover() {
 		Ingrediente i = getEntity();
 		ingDAO.remover(i);
-		
-
 	}
 
-	public void alterar() throws SQLException {
+	public void alterar() {
 		Ingrediente i = getEntity();
 		ingDAO.alterar(i);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void generateTable() {
 
 		TableColumn<Ingrediente, String> colNome = new TableColumn<>("Nome");
@@ -78,10 +84,19 @@ public class IngredienteControl {
 
 		TableColumn<Ingrediente, String> colTipoUnit = new TableColumn<>("Tipo Unitário");
 		colTipoUnit.setCellValueFactory(new PropertyValueFactory<Ingrediente, String>("tipoUnit"));
+		
+		TableColumn<Ingrediente, Integer> colId = new TableColumn<>("Id");
+		colId.setCellValueFactory(new PropertyValueFactory<Ingrediente, Integer>("id"));
 
-		table.getColumns().addAll(colNome, colTipoUnit);
+		table.getColumns().addAll(colId, colNome, colTipoUnit);
 		table.setItems(lista);
-
+		
+		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            setEntity(newValue);
+        });
+		
+		table.setItems(lista);
+		pesquisarPorNome();
 	}
 
 	public TableView<Ingrediente> getTable() {

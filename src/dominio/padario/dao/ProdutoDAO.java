@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dominio.padaria.entity.Ingrediente;
+import dominio.padaria.entity.Ingrediente_Produto;
+import dominio.padaria.entity.Produto;
 
-public class IngredienteDAO implements IIngredienteDAO{
+public class ProdutoDAO implements IProdutoDAO{
 	
 	private Connection c;
-
-    public IngredienteDAO() {
-    	try {
+	
+	public ProdutoDAO() {
+		try {
     		IGenericDAO gDao = new GenericDAO();
             c = gDao.getConnection();
 		} catch (Exception e) {
@@ -22,15 +24,13 @@ public class IngredienteDAO implements IIngredienteDAO{
 		}
     	
 	}
-        
 
 	@Override
-	public void adicionar(Ingrediente i) {
+	public void adicionar(Produto p) {
 		try {
-			String sql = "INSERT INTO ingrediente (nome, tipoUnit) VALUES (?, ?)";
+			String sql = "INSERT INTO produto (nome) VALUES (?)";
 	        PreparedStatement stmt = c.prepareStatement(sql);
-	        stmt.setString(1, i.getNome());
-	        stmt.setString(2, i.getTipoUnit());
+	        stmt.setString(1, p.getNome());
 	        stmt.executeUpdate();
 	        stmt.close();
 		} catch (SQLException e) {
@@ -40,51 +40,33 @@ public class IngredienteDAO implements IIngredienteDAO{
 	}
 
 	@Override
-	public List<Ingrediente> pesquisarPorNome(String nome){
+	public List<Ingrediente> buscaIngrediente() {
 		List<Ingrediente> lista = new ArrayList<>();
 		try {
-			String sql = "SELECT * FROM ingrediente WHERE nome LIKE ?";
+			String sql = "SELECT id, nome FROM ingrediente";
 	        PreparedStatement stmt = c.prepareStatement(sql);
-	        stmt.setString(1, "%" + nome + "%");
 	        ResultSet rs = stmt.executeQuery();
 
 	        while(rs.next()) {
 	            Ingrediente i = new Ingrediente();
 	            i.setId(rs.getInt("id"));
 	            i.setNome(rs.getString("nome"));
-	            i.setTipoUnit(rs.getString("tipoUnit"));
 	            lista.add(i);
 	        } 
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return lista;
 	}
 
 	@Override
-	public void remover(Ingrediente i){
+	public void adicionaProdutoIngrediente(Ingrediente_Produto ip) {
 		try {
-			String sql = "DELETE FROM ingrediente WHERE nome LIKE ?";
+			String sql = "INSERT INTO produto_ingrediente (produto_id, ingrediente_id, quantidade) VALUES (?, ?, ?)";
 	        PreparedStatement stmt = c.prepareStatement(sql);
-	        stmt.setString(1, "%" + i.getNome() + "%");
-	        stmt.executeUpdate();
-	        stmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	@Override
-	public void alterar(Ingrediente i) {
-		
-		try {
-			String sql = "UPDATE ingrediente SET nome = ?, tipoUnit = ? WHERE id = ?";
-	        PreparedStatement stmt = c.prepareStatement(sql);
-	        stmt.setString(1, i.getNome());
-	        stmt.setString(2, i.getTipoUnit());
-	        stmt.setInt(3, i.getId());
+	        stmt.setInt(1, ip.getId_produto());
+	        stmt.setInt(2, ip.getIngrediente());
+	        stmt.setInt(3, ip.getQuantidade());
 	        stmt.executeUpdate();
 	        stmt.close();
 		} catch (SQLException e) {

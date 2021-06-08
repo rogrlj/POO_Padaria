@@ -1,12 +1,9 @@
 package dominio.padaria.boundary;
 
-import java.sql.SQLException;
 
 import dominio.padaria.control.IngredienteControl;
-import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,7 +12,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 public class IngredienteBoundary implements ITelaStrategy {
 
@@ -52,34 +50,19 @@ public class IngredienteBoundary implements ITelaStrategy {
         control.generateTable();       
         panePrincipal.setCenter(control.getTable());
         
-        btAdicionar.setOnAction((e) -> { try {
-			control.adicionar();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}});
-        btPesquisar.setOnAction((e) -> { try {
-			control.pesquisarPorNome();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}});
-        btAlterar.setOnAction((e) -> { try {
-			control.alterar();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}});
-        btRemover.setOnAction((e) -> { try {
-			control.remover();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}});
+        btAdicionar.setOnAction((e) -> {control.adicionar();});
+        
+        btPesquisar.setOnAction((e) -> {control.pesquisarPorNome();});
+        
+        btAlterar.setOnAction((e) -> {control.alterar();});
+        
+        btRemover.setOnAction((e) -> {control.remover();});
           
         paneSecundario.getChildren().addAll(gridPane, paneBotao);
                 
         panePrincipal.setTop(paneSecundario);
+        
+
         
         Bindings.bindBidirectional(txtNome.textProperty(), control.nomeProperty());
         Bindings.bindBidirectional(txtTipoUnit.textProperty(), control.tipoUnitProperty());
